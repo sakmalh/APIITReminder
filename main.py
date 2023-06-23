@@ -62,5 +62,5 @@ for turnit in turnitin:
 
 
 text_message = text_formatting(turnitin_details, assignments_details)
-# pywhatkit.sendwhatmsg_to_group_instantly("D8nIIBG7RTR5KPlO0nfXoU", "text_message")
-pywhatkit.sendwhatmsg_instantly("+447742539840", text_message)
+# pywhatkit.sendwhatmsg_to_group_instantly("", "text_message")
+# pywhatkit.sendwhatmsg_instantly("+", text_message)
