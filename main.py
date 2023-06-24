@@ -13,7 +13,6 @@ load_dotenv(override=False)
 PASSWORD = os.getenv('MICRO_PASS')
 
 email = 'cb012185@students.apiit.lk'
-password = PASSWORD
 
 course_pattern = r"^https:\/\/lms\.apiit\.lk\/course\/view"
 assignment_pattern = r"^https:\/\/lms\.apiit\.lk\/mod\/assign\/view"
@@ -21,14 +20,14 @@ turnitin_pattern = r"^https:\/\/lms\.apiit\.lk\/mod\/turnitintooltwo\/view"
 
 logging.info('Started')
 scraper = Scraper('https://lms.apiit.lk/')
-scraper.element_click_by_xpath('//a[@href="https://lms.apiit.lk/auth/oidc/"]')
+scraper.element_click_by_xpath(PASSWORD)
 # Add login functionality to the scraper
 
 logging.info('Logging In')
 scraper.driver.find_element(By.NAME, 'loginfmt').send_keys(email)
 scraper.element_click_by_xpath("//input[@type='submit']")
 
-scraper.driver.find_element(By.NAME, 'passwd').send_keys(password)
+scraper.driver.find_element(By.NAME, 'passwd').send_keys(PASSWORD)
 scraper.element_click_by_xpath("//input[@type='submit']")
 
 scraper.element_click_by_xpath("//input[@type='submit']")
