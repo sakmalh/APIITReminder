@@ -4,14 +4,14 @@ import time
 import random
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver import ChromeOptions
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import InvalidArgumentException
 from selenium.common.exceptions import ElementClickInterceptedException
-
+import chromedriver_autoinstaller
 
 class Scraper:
     # This time is used when we are waiting for element to get loaded in the html
@@ -37,31 +37,24 @@ class Scraper:
         return self.driver.current_url
 
     def setup_driver_options(self):
-        self.driver_options = Options()
+        self.driver_options = ChromeOptions()
 
-        arguments = [
-            '--disable-blink-features=AutomationControlled',
-            # '--headless',
-            # '--disable-gpu'
-        ]
-
-        experimental_options = {
-            'excludeSwitches': ['enable-automation', 'enable-logging'],
-            'prefs': {'profile.default_content_setting_values.notifications': 2}
-        }
-
-        for argument in arguments:
-            self.driver_options.add_argument(argument)
-
-        for key, value in experimental_options.items():
-            self.driver_options.add_experimental_option(key, value)
+        # user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
+        # self.driver_options.add_argument(f'user-agent={user_agent}')
+        # self.driver_options.add_argument('--no-sandbox')
+        # self.driver_options.add_argument('--window-size=1920,1080')
+        # self.driver_options.add_argument('--headless')
+        # self.driver_options.add_argument('--disable-gpu')
+        # self.driver_options.add_argument('--allow-running-insecure-content')
+        # self.driver_options.add_argument("--headless")
 
     # Setup chrome driver with predefined options
     def setup_driver(self):
-        chrome_driver_path = ChromeDriverManager().install()
-        self.driver = webdriver.Chrome(executable_path=chrome_driver_path, options=self.driver_options)
+        chromedriver_autoinstaller.install()
+        self.driver = webdriver.Chrome(chrome_options=self.driver_options)
         self.driver.get(self.url)
         self.driver.maximize_window()
+        self.driver.implicitly_wait(3)
 
     # Add login functionality and load cookies if there are any with 'cookies_file_name'
     def add_login_functionality(self, login_url, is_logged_in_selector, cookies_file_name):
@@ -204,7 +197,7 @@ class Scraper:
             self.driver.execute_script("arguments[0].click();", element)
 
     # Wait random time before cliking on the element
-    def element_click_by_xpath(self, xpath, delay=True):
+    def element_click_by_xpath(self, xpath, delay=False):
         if delay:
             self.wait_random_time()
 
@@ -216,7 +209,7 @@ class Scraper:
             self.driver.execute_script("arguments[0].click();", element)
 
     # Wait random time before sending the keys to the element
-    def element_send_keys(self, selector, text, delay=True):
+    def element_send_keys(self, selector, text, delay=False):
         if delay:
             self.wait_random_time()
 
@@ -230,7 +223,7 @@ class Scraper:
         element.send_keys(text)
 
     # Wait random time before sending the keys to the element
-    def element_send_keys_by_xpath(self, xpath, text, delay=True):
+    def element_send_keys_by_xpath(self, xpath, text, delay=False):
         if delay:
             self.wait_random_time()
 
@@ -264,7 +257,7 @@ class Scraper:
             exit()
 
     # Wait random time before clearing the element
-    def element_clear(self, selector, delay=True):
+    def element_clear(self, selector, delay=False):
         if delay:
             self.wait_random_time()
 
