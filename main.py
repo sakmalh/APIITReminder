@@ -82,5 +82,4 @@ for turnit in turnitin:
 text_message = text_formatting(turnitin_details, assignments_details)
 print(text_message)
 logging.info(text_message)
-# pywhatkit.sendwhatmsg_to_group_instantly("DrUM5ch91Va93xUdj1sfgz", text_message)
-# pywhatkit.sendwhatmsg_instantly("+", text_message)
+

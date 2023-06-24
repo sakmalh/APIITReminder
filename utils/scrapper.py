@@ -47,12 +47,11 @@ class Scraper:
         self.driver_options.add_argument('--headless')
         self.driver_options.add_argument('--disable-gpu')
         self.driver_options.add_argument('--allow-running-insecure-content')
-        self.driver_options.add_argument("--headless")
 
     # Setup chrome driver with predefined options
     def setup_driver(self):
         chromedriver_autoinstaller.install()
-        self.driver = webdriver.Chrome(chrome_options=self.driver_options)
+        self.driver = webdriver.Chrome(options=self.driver_options)
         self.driver.get(self.url)
         self.driver.maximize_window()
         self.driver.implicitly_wait(3)
