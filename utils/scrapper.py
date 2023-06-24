@@ -69,9 +69,9 @@ class Scraper:
         logging.warning(version)
         self.driver = webdriver.Chrome(options=self.driver_options)
         self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-        self.driver.get(self.url)
+        self.driver.get('google.com')
         self.driver.maximize_window()
-        self.driver.implicitly_wait(3)
+        self.driver.implicitly_wait(10)
 
     # Add login functionality and load cookies if there are any with 'cookies_file_name'
     def add_login_functionality(self, login_url, is_logged_in_selector, cookies_file_name):
