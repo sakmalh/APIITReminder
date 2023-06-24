@@ -39,19 +39,18 @@ class Scraper:
     def setup_driver_options(self):
         self.driver_options = ChromeOptions()
 
-        user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
+        user_agent = 'user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36'
         self.driver_options.add_argument(f'user-agent={user_agent}')
         self.driver_options.add_argument('--no-sandbox')
         self.driver_options.add_argument('--window-size=1920,1080')
         self.driver_options.add_argument('--headless')
         self.driver_options.add_argument('--disable-gpu')
         self.driver_options.add_argument('--allow-running-insecure-content')
-        self.driver_options.add_argument("--headless")
 
     # Setup chrome driver with predefined options
     def setup_driver(self):
         chromedriver_autoinstaller.install()
-        self.driver = webdriver.Chrome(chrome_options=self.driver_options)
+        self.driver = webdriver.Chrome(options=self.driver_options)
         self.driver.get(self.url)
         self.driver.maximize_window()
         self.driver.implicitly_wait(3)
