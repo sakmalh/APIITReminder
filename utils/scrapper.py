@@ -187,10 +187,10 @@ class Scraper:
         try:
             # Wait for element to load
             element = WebDriverWait(self.driver, wait_element_time).until(wait_until)
-        except:
+        except Exception as e:
             if exit_on_missing_element:
                 # End the program execution because we cannot find the element
-                print('ERROR: Timed out waiting for the element with xpath "' + xpath + '" to load')
+                print(e)
                 exit()
             else:
                 return False
