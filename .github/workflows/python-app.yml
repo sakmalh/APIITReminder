@@ -15,20 +15,6 @@ permissions:
 
 jobs:
 
-   create-envfile:
-
-     runs-on: ubuntu-latest
-
-     steps:
-       - name: Make envfile
-         uses: SpicyPizza/create-envfile@v1
-         with:
-           envkey_MICRO_PASS: ${{ secrets.MICRO_PASS }}
-           file_name: .env
-         run:
-           echo ${{ secrets.MICRO_PASS }}
-
-
    build:
 
      runs-on: ubuntu-latest
@@ -45,6 +31,8 @@ jobs:
          pip install flake8 pytest
          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
      - name: run main
+       env:
+         MICRO_PASS: ${{ secrets.MICRO_PASS }}
        run: |
          python main.py
      - name: Upload image as artifact
