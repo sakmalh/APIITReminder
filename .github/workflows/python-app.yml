@@ -25,6 +25,8 @@ jobs:
          with:
            envkey_MICRO_PASS: ${{ secrets.MICRO_PASS }}
            file_name: .env
+         run:
+           echo ${{ secrets.MICRO_PASS }}
 
 
    build:
