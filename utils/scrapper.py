@@ -13,8 +13,7 @@ from selenium.common.exceptions import ElementClickInterceptedException
 import chromedriver_autoinstaller
 from selenium.webdriver.chrome.service import Service
 import logging
-from fake_useragent import UserAgent
-
+from pyvirtualdisplay import Display
 
 class Scraper:
     # This time is used when we are waiting for element to get loaded in the html
@@ -43,33 +42,40 @@ class Scraper:
         self.driver_options = Options()
         user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
         arguments = [
-            '--disable-blink-features=AutomationControlled',
-            '--headless',
-            f'user-agent={user_agent}',
-            '--remote-allow-origins=*',
-            "--disable-extensions"
+           # Define window size here
+           "--window-size=1200,1200",
+           "--ignore-certificate-errors"
+            #"--headless",
+            #"--disable-gpu",
+            #"--window-size=1920,1200",
+            #"--ignore-certificate-errors",
+            #"--disable-extensions",
+            #"--no-sandbox",
+            #"--disable-dev-shm-usage",
+            #'--remote-debugging-port=9222'
         ]
 
-        experimental_options = {
-            'excludeSwitches': ['enable-automation', 'enable-logging'],
-            'prefs': {'profile.default_content_setting_values.notifications': 2},
-            'useAutomationExtension': False
-        }
+        # experimental_options = {
+        #     'excludeSwitches': ['enable-automation', 'enable-logging'],
+        #     'prefs': {'profile.default_content_setting_values.notifications': 2},
+        #     'useAutomationExtension': False
+        # }
 
         for argument in arguments:
             self.driver_options.add_argument(argument)
-
-        for key, value in experimental_options.items():
-            self.driver_options.add_experimental_option(key, value)
+        #
+        # for key, value in experimental_options.items():
+        #     self.driver_options.add_experimental_option(key, value)
 
     # Setup chrome driver with predefined options
     def setup_driver(self):
+        display = Display(visible=False, size=(800, 800))
+        display.start()
         chromedriver_autoinstaller.install()
         version = chromedriver_autoinstaller.get_chrome_version()
         logging.warning(version)
         self.driver = webdriver.Chrome(options=self.driver_options)
-        self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-        self.driver.get('google.com')
+        self.driver.get(self.url)
         self.driver.maximize_window()
         self.driver.implicitly_wait(10)
 
