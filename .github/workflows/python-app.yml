@@ -14,6 +14,20 @@ permissions:
   pull-requests: write
 
 jobs:
+  jobs:
+
+    create-envfile:
+
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Make envfile
+          uses: SpicyPizza/create-envfile@v1
+          with:
+            envkey_MICRO_PASS: ${{ secrets.MICRO_PASS }}
+            file_name: .env
+
+
   build:
 
     runs-on: ubuntu-latest

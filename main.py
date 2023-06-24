@@ -4,7 +4,18 @@ import re
 from selenium.webdriver.common.by import By
 from datetime import datetime
 from utils.text_formatting import text_formatting
+from dotenv import load_dotenv
+import os
+
 import logging
+load_dotenv(override=False)
+
+PASSWORD = os.getenv('MICRO_PASS')
+print(PASSWORD)
+logging.log(PASSWORD)
+
+email = 'cb012185@students.apiit.lk'
+password = PASSWORD
 
 course_pattern = r"^https:\/\/lms\.apiit\.lk\/course\/view"
 assignment_pattern = r"^https:\/\/lms\.apiit\.lk\/mod\/assign\/view"
@@ -12,16 +23,20 @@ turnitin_pattern = r"^https:\/\/lms\.apiit\.lk\/mod\/turnitintooltwo\/view"
 
 logging.info('Started')
 scraper = Scraper('https://lms.apiit.lk/')
-scraper.driver.save_screenshot('test.png')
 scraper.element_click_by_xpath('//a[@href="https://lms.apiit.lk/auth/oidc/"]')
 # Add login functionality to the scraper
 
 logging.info('Logging In')
-scraper.add_login_functionality('https://lms.apiit.lk/',
-                                '//a[@href="https://lms.apiit.lk/auth/oidc/"]', 'microsoft')
+scraper.driver.find_element(By.NAME, 'loginfmt').send_keys(email)
+scraper.element_click_by_xpath("//input[@type='submit']")
 
+scraper.driver.find_element(By.NAME, 'passwd').send_keys(password)
+scraper.element_click_by_xpath("//input[@type='submit']")
+
+scraper.element_click_by_xpath("//input[@type='submit']")
+
+scraper.go_to_page('https://lms.apiit.lk/')
 logging.info('Logged In')
-scraper.element_click_by_xpath('//a[@href="https://lms.apiit.lk/auth/oidc/"]')
 links = scraper.get_all_links()
 courses = set([link for link in links if re.match(course_pattern, link)])
 turnitin = []
