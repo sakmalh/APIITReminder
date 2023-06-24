@@ -33,8 +33,6 @@ jobs:
        run: sudo apt purge chromium-browser
      - name: Install a new Chromium
        run: sudo apt install -y chromium-browser
-     - name: Removing previous chrome instances on runner
-       run: sudo apt purge google-chrome-stable
      - name: Install dependencies
        run: |
          python -m pip install --upgrade pip
