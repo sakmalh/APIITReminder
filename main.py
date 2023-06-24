@@ -15,11 +15,11 @@ scraper = Scraper('https://lms.apiit.lk/')
 scraper.element_click_by_xpath('//a[@href="https://lms.apiit.lk/auth/oidc/"]')
 # Add login functionality to the scraper
 
-logging.log('Logging In')
+logging.info('Logging In')
 scraper.add_login_functionality('https://lms.apiit.lk/',
                                 '//a[@href="https://lms.apiit.lk/auth/oidc/"]', 'microsoft')
 
-logging.log('Logged In')
+logging.info('Logged In')
 scraper.element_click_by_xpath('//a[@href="https://lms.apiit.lk/auth/oidc/"]')
 links = scraper.get_all_links()
 courses = set([link for link in links if re.match(course_pattern, link)])
@@ -67,6 +67,6 @@ for turnit in turnitin:
 
 text_message = text_formatting(turnitin_details, assignments_details)
 print(text_message)
-logging.log(text_message)
+logging.info(text_message)
 # pywhatkit.sendwhatmsg_to_group_instantly("DrUM5ch91Va93xUdj1sfgz", text_message)
 # pywhatkit.sendwhatmsg_instantly("+", text_message)
