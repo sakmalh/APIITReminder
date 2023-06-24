@@ -4,8 +4,7 @@ import time
 import random
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
-from selenium.webdriver import ChromeOptions
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -41,19 +40,22 @@ class Scraper:
         return self.driver.current_url
 
     def setup_driver_options(self):
-        self.driver_options = ChromeOptions()
-        ua = UserAgent()
-        user_agent = ua.chrome
-        self.driver_options.add_argument('--no-sandbox')
-        self.driver_options.add_argument('--window-size=1920,1080')
-        self.driver_options.add_argument('--headless')
-        self.driver_options.add_argument('--disable-gpu')
-        self.driver_options.add_argument('--allow-running-insecure-content')
-        self.driver_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        self.driver_options.add_experimental_option('useAutomationExtension', False)
-        self.driver_options.add_argument("--disable-blink-features=AutomationControlled")
-        self.driver_options.add_argument(f'user-agent={user_agent}')
-        self.driver_options.add_argument("--remote-allow-origins=*")
+        self.driver_options = Options()
+        arguments = [
+            '--disable-blink-features=AutomationControlled',
+            '--headless'
+        ]
+
+        experimental_options = {
+            'excludeSwitches': ['enable-automation', 'enable-logging'],
+            'prefs': {'profile.default_content_setting_values.notifications': 2}
+        }
+
+        for argument in arguments:
+            self.driver_options.add_argument(argument)
+
+        for key, value in experimental_options.items():
+            self.driver_options.add_experimental_option(key, value)
 
     # Setup chrome driver with predefined options
     def setup_driver(self):
