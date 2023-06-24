@@ -33,9 +33,9 @@ jobs:
       run: |
         python main.py
     - name: Upload image as artifact
-    uses: actions/upload-artifact@v2
-    with:
-      name: generated-image
-      path: test.png
+      uses: actions/upload-artifact@v2
+      with:
+        name: generated-image
+        path: test.png
 
 
