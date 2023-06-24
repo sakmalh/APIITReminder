@@ -41,9 +41,11 @@ class Scraper:
 
     def setup_driver_options(self):
         self.driver_options = Options()
+        user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
         arguments = [
             '--disable-blink-features=AutomationControlled',
-            '--headless'
+            '--headless',
+            f'user-agent={user_agent}'
         ]
 
         experimental_options = {
