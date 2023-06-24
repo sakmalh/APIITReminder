@@ -12,7 +12,7 @@ load_dotenv(override=False)
 
 PASSWORD = os.getenv('MICRO_PASS')
 print(PASSWORD)
-logging.log(PASSWORD)
+logging.debug(PASSWORD)
 
 email = 'cb012185@students.apiit.lk'
 password = PASSWORD
