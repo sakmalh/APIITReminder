@@ -16,6 +16,7 @@ from selenium.webdriver.chrome.service import Service
 import logging
 from fake_useragent import UserAgent
 
+
 class Scraper:
     # This time is used when we are waiting for element to get loaded in the html
     wait_element_time = 10
@@ -52,6 +53,7 @@ class Scraper:
         self.driver_options.add_experimental_option('useAutomationExtension', False)
         self.driver_options.add_argument("--disable-blink-features=AutomationControlled")
         self.driver_options.add_argument(f'user-agent={user_agent}')
+        self.driver_options.add_argument("--remote-allow-origins=*")
 
     # Setup chrome driver with predefined options
     def setup_driver(self):
