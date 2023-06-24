@@ -45,7 +45,8 @@ class Scraper:
         arguments = [
             '--disable-blink-features=AutomationControlled',
             '--headless',
-            f'user-agent={user_agent}'
+            f'user-agent={user_agent}',
+            '--remote-allow-origins=*'
         ]
 
         experimental_options = {
@@ -187,10 +188,10 @@ class Scraper:
         try:
             # Wait for element to load
             element = WebDriverWait(self.driver, wait_element_time).until(wait_until)
-        except Exception as e:
+        except:
             if exit_on_missing_element:
                 # End the program execution because we cannot find the element
-                print(e)
+                print('ERROR: Timed out waiting for the element with xpath "' + xpath + '" to load')
                 exit()
             else:
                 return False
