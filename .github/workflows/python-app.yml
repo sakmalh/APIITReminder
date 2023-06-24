@@ -31,4 +31,8 @@ jobs:
     - name: run main
       run: |
         python main.py
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+         github_token: ${{ secrets.GITHUB_TOKEN }}
 
