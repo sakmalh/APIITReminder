@@ -14,6 +14,7 @@ from selenium.common.exceptions import ElementClickInterceptedException
 import chromedriver_autoinstaller
 from selenium.webdriver.chrome.service import Service
 import logging
+from fake_useragent import UserAgent
 
 class Scraper:
     # This time is used when we are waiting for element to get loaded in the html
@@ -40,14 +41,17 @@ class Scraper:
 
     def setup_driver_options(self):
         self.driver_options = ChromeOptions()
-
-        user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
-        self.driver_options.add_argument(f'user-agent={user_agent}')
+        ua = UserAgent()
+        user_agent = ua.chrome
         self.driver_options.add_argument('--no-sandbox')
         self.driver_options.add_argument('--window-size=1920,1080')
         self.driver_options.add_argument('--headless')
         self.driver_options.add_argument('--disable-gpu')
         self.driver_options.add_argument('--allow-running-insecure-content')
+        self.driver_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        self.driver_options.add_experimental_option('useAutomationExtension', False)
+        self.driver_options.add_argument("--disable-blink-features=AutomationControlled")
+        self.driver_options.add_argument(f'user-agent={user_agent}')
 
     # Setup chrome driver with predefined options
     def setup_driver(self):
