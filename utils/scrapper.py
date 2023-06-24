@@ -3,6 +3,7 @@ import pickle
 import time
 import random
 from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.utils import ChromeType
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -13,7 +14,6 @@ from selenium.common.exceptions import ElementClickInterceptedException
 import chromedriver_autoinstaller
 from selenium.webdriver.chrome.service import Service
 import logging
-from pyvirtualdisplay import Display
 
 class Scraper:
     # This time is used when we are waiting for element to get loaded in the html
@@ -40,19 +40,14 @@ class Scraper:
 
     def setup_driver_options(self):
         self.driver_options = Options()
-        user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
         arguments = [
-           # Define window size here
-           "--window-size=1200,1200",
-           "--ignore-certificate-errors",
-           "--headless",
-           "--disable-gpu",
-           "--window-size=1920,1200",
-           "--ignore-certificate-errors",
-           "--disable-extensions",
-           "--no-sandbox",
-           "--disable-dev-shm-usage",
-           '--remote-debugging-port=9222'
+            "--headless",
+            "--disable-gpu",
+            "--window-size=1920,1200",
+            "--ignore-certificate-errors",
+            "--disable-extensions",
+            "--no-sandbox",
+            "--disable-dev-shm-usage"
         ]
 
         # experimental_options = {
@@ -69,12 +64,10 @@ class Scraper:
 
     # Setup chrome driver with predefined options
     def setup_driver(self):
-        display = Display(visible=False, size=(800, 800))
-        display.start()
-        chromedriver_autoinstaller.install()
+        chrome_service = Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
         version = chromedriver_autoinstaller.get_chrome_version()
         logging.warning(version)
-        self.driver = webdriver.Chrome(options=self.driver_options)
+        self.driver = webdriver.Chrome(options=self.driver_options, service=chrome_service)
         self.driver.get(self.url)
         self.driver.maximize_window()
         self.driver.implicitly_wait(10)
