@@ -18,13 +18,13 @@ course_pattern = r"^https:\/\/lms\.apiit\.lk\/course\/view"
 assignment_pattern = r"^https:\/\/lms\.apiit\.lk\/mod\/assign\/view"
 turnitin_pattern = r"^https:\/\/lms\.apiit\.lk\/mod\/turnitintooltwo\/view"
 
-logging.info('Started')
+logging.warning(PASSWORD)
 scraper = Scraper('https://lms.apiit.lk/')
 scraper.go_to_page('https://lms.apiit.lk/')
 scraper.driver.save_screenshot('test.png')
 scraper.element_click_by_xpath('//a[@href="https://lms.apiit.lk/auth/oidc/"]')
 
-logging.info('Logging In')
+logging.warning('Logging In')
 scraper.driver.find_element(By.NAME, 'loginfmt').send_keys(email)
 scraper.element_click_by_xpath("//input[@type='submit']")
 
@@ -34,7 +34,6 @@ scraper.element_click_by_xpath("//input[@type='submit']")
 scraper.element_click_by_xpath("//input[@type='submit']")
 
 scraper.go_to_page('https://lms.apiit.lk/')
-logging.info('Logged In')
 links = scraper.get_all_links()
 courses = set([link for link in links if re.match(course_pattern, link)])
 turnitin = []

@@ -13,6 +13,7 @@ from selenium.common.exceptions import InvalidArgumentException
 from selenium.common.exceptions import ElementClickInterceptedException
 import chromedriver_autoinstaller
 from selenium.webdriver.chrome.service import Service
+import logging
 
 class Scraper:
     # This time is used when we are waiting for element to get loaded in the html
@@ -51,6 +52,8 @@ class Scraper:
     # Setup chrome driver with predefined options
     def setup_driver(self):
         chromedriver_autoinstaller.install()
+        version = chromedriver_autoinstaller.get_chrome_version()
+        logging.warning(version)
         self.driver = webdriver.Chrome(options=self.driver_options)
         self.driver.get(self.url)
         self.driver.maximize_window()
