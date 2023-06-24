@@ -20,7 +20,7 @@ turnitin_pattern = r"^https:\/\/lms\.apiit\.lk\/mod\/turnitintooltwo\/view"
 
 logging.info('Started')
 scraper = Scraper('https://lms.apiit.lk/')
-scraper.element_click_by_xpath(PASSWORD)
+scraper.element_click_by_xpath('//a[@href="https://lms.apiit.lk/auth/oidc/"]')
 # Add login functionality to the scraper
 
 logging.info('Logging In')
