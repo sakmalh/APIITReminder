@@ -46,12 +46,14 @@ class Scraper:
             '--disable-blink-features=AutomationControlled',
             '--headless',
             f'user-agent={user_agent}',
-            '--remote-allow-origins=*'
+            '--remote-allow-origins=*',
+            "--disable-extensions"
         ]
 
         experimental_options = {
             'excludeSwitches': ['enable-automation', 'enable-logging'],
-            'prefs': {'profile.default_content_setting_values.notifications': 2}
+            'prefs': {'profile.default_content_setting_values.notifications': 2},
+            'useAutomationExtension': False
         }
 
         for argument in arguments:
@@ -66,6 +68,7 @@ class Scraper:
         version = chromedriver_autoinstaller.get_chrome_version()
         logging.warning(version)
         self.driver = webdriver.Chrome(options=self.driver_options)
+        self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         self.driver.get(self.url)
         self.driver.maximize_window()
         self.driver.implicitly_wait(3)
