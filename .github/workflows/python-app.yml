@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write
 
 jobs:
   build:
@@ -31,8 +32,10 @@ jobs:
     - name: run main
       run: |
         python main.py
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-         github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload image as artifact
+    uses: actions/upload-artifact@v2
+    with:
+      name: generated-image
+      path: test.png
+
 
