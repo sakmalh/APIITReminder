@@ -5,7 +5,8 @@ import time
 import random
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
-from selenium.webdriver import ChromeOptions
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -38,14 +39,13 @@ class Scraper:
         return self.driver.current_url
 
     def setup_driver_options(self):
-        self.driver_options = ChromeOptions()
-        user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
-        self.driver_options.add_argument(f'user-agent={user_agent}')
+        self.driver_options = Options()
         self.driver_options.add_argument('--no-sandbox')
-        self.driver_options.add_argument('--headless=new')
+        self.driver_options.add_argument('--headless')
 
     def setup_driver(self):
-        self.driver = webdriver.Chrome(options=self.driver_options)
+        self.driver = webdriver.Chrome(service=Service('/usr/local/bin/chromedriver'),
+                                       options=self.driver_options)
         self.driver.get(self.url)
 
     # Add login functionality and load cookies if there are any with 'cookies_file_name'
