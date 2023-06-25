@@ -37,7 +37,7 @@ jobs:
          PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
          PRESHARED: ${{ secrets.PRESHARED }}
          ENDPOINT: ${{ secrets.ENDPOINT }}
-       run:
+       run: |
          python wireguard.py
          sudo apt-get update && sudo apt-get upgrade -y
          sudo apt-get install wireguard
