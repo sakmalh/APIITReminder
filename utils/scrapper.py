@@ -44,10 +44,7 @@ class Scraper:
         self.driver_options.add_argument('--no-sandbox')
         self.driver_options.add_argument('--headless=new')
 
-    # Setup chrome driver with predefined options
     def setup_driver(self):
-        chromedriver_autoinstaller.install()
-        logging.warning(chromedriver_autoinstaller.get_chrome_version())
         self.driver = webdriver.Chrome(options=self.driver_options)
         self.driver.get(self.url)
 
