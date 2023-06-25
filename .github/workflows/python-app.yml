@@ -29,10 +29,11 @@ jobs:
          curl -O https://chromedriver.storage.googleapis.com/104.0.5112.79/chromedriver_linux64.zip
          sudo unzip chromedriver_linux64.zip -d /usr/local/bin
          chromedriver --version
+     - name: Removing previous chrome instances on runner
+       run: sudo apt purge google-chrome-stable
      - name: Install Chrom
        run: |
-         sudo apt purge google-chrome-stable
-         apt-get install alien dpkg-dev debhelper build-essential
+         sudo apt-get install alien dpkg-dev debhelper build-essential
          curl -O http://orion.lcg.ufrj.br/RPMS/myrpms/google/google-chrome-stable-104.0.5112.101-1.x86_64.rpm
          alien google-chrome-stable-104.0.5112.101-1.x86_64.rpm
          dpkg -i google-chrome-stable-104.0.5112.101-1.x86_64.rpm
