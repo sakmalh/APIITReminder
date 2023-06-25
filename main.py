@@ -20,6 +20,7 @@ turnitin_pattern = r"^https:\/\/lms\.apiit\.lk\/mod\/turnitintooltwo\/view"
 
 logging.warning(PASSWORD)
 scraper = Scraper('https://www.google.com')
+scraper.driver.get('https://lms.apiit.lk/login/index.php')
 scraper.driver.save_screenshot('test.png')
 scraper.element_click_by_xpath('//a[@href="https://lms.apiit.lk/auth/oidc/"]')
 
