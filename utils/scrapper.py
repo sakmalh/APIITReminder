@@ -44,8 +44,8 @@ class Scraper:
         self.driver_options.add_argument('--headless')
 
     def setup_driver(self):
-        self.driver = webdriver.Chrome(service=Service('/usr/local/bin/chromedriver'),
-                                       options=self.driver_options)
+        self.driver = webdriver.Chrome()
+        self.driver.maximize_window()
         self.driver.get(self.url)
 
     # Add login functionality and load cookies if there are any with 'cookies_file_name'
