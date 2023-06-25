@@ -43,7 +43,6 @@ jobs:
          sudo apt-get install wireguard
          sudo rm /etc/wireguard/wg0.conf
          mv wg0.conf /etc/wireguard
-         yes | sudo cp -rf wg0.conf /etc/wireguard/
          sudo wg-quick up wg0
 
      - name: Check IP
