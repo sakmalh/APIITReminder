@@ -39,10 +39,11 @@ class Scraper:
 
     def setup_driver_options(self):
         self.driver_options = Options()
-        user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
-        self.driver_options.add_argument(f'user-agent={user_agent}')
-        self.driver_options.add_argument('--no-sandbox')
-        self.driver_options.add_argument('--headless')
+        # user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+        # self.driver_options.add_argument(f'user-agent={user_agent}')
+        # self.driver_options.add_argument('--no-sandbox')
+        # self.driver_options.add_argument('--headless')
+        self.driver_options.add_argument("--remote-allow-origins=*");
 
     def setup_driver(self):
         self.driver = webdriver.Chrome(options=self.driver_options)
