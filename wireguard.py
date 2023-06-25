@@ -17,11 +17,11 @@ mappings = {
      'ENDPOINT': ENDPOINT,
 }
 
-with open('wireguard.conf', 'r') as file:
+with open('wg0.conf', 'r') as file:
     filedata = file.read()
 
 for x, y in mappings.items():
     filedata = filedata.replace(x, y)
 
-with open('wireguard.conf', 'w') as file:
+with open('wg0.conf', 'w') as file:
     file.write(filedata)
