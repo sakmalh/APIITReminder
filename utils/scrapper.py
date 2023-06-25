@@ -46,7 +46,7 @@ class Scraper:
         self.driver_options.add_argument("--remote-allow-origins=*");
 
     def setup_driver(self):
-        self.driver = webdriver.Chrome(options=self.driver_options)
+        self.driver = webdriver.Firefox()
         self.driver.maximize_window()
         self.driver.get(self.url)
 
