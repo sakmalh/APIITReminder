@@ -42,10 +42,7 @@ class Scraper:
         user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
         self.driver_options.add_argument(f'user-agent={user_agent}')
         self.driver_options.add_argument('--no-sandbox')
-        self.driver_options.add_argument('--window-size=1920,1080')
         self.driver_options.add_argument('--headless=new')
-        self.driver_options.add_argument('--disable-gpu')
-        self.driver_options.add_argument('--allow-running-insecure-content')
 
     # Setup chrome driver with predefined options
     def setup_driver(self):
@@ -53,8 +50,6 @@ class Scraper:
         logging.warning(chromedriver_autoinstaller.get_chrome_version())
         self.driver = webdriver.Chrome(options=self.driver_options)
         self.driver.get(self.url)
-        self.driver.maximize_window()
-        self.driver.implicitly_wait(3)
 
     # Add login functionality and load cookies if there are any with 'cookies_file_name'
     def add_login_functionality(self, login_url, is_logged_in_selector, cookies_file_name):
