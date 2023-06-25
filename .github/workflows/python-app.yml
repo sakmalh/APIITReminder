@@ -26,13 +26,15 @@ jobs:
        with:
          python-version: "3.10"
      - name: Set up WireGuard
+       env:
+         IPS: ${{ secrets.IPS }}
+         PRIVATE: ${{ secrets.PRIVATE }}
+         PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
+         PRESHARED: ${{ secrets.PRESHARED }}
+         ENDPOINT: ${{ secrets.ENDPOINT }}
        run:
-         ls
-         sed -i "s_ADDRESS_${{ secrets.IPS }}_" /home/runner/work/APIITReminder/APIITReminder/wireguard.conf
-         sed -i "s_PRIVATEKEY_${{ secrets.PRIVATE }}_" /home/runner/work/APIITReminder/APIITReminder/wireguard.conf
-         sed -i "s_PUBLICKEY_${{ secrets.PUBLIC_KEY }}_" /home/runner/work/APIITReminder/APIITReminder/wireguard.conf
-         sed -i "s_PRESHAREDKEY_${{ secrets.PRESHARED }}_" /home/runner/work/APIITReminder/APIITReminder/wireguard.conf
-         sed -i "s_ENDPOINT_${{ secrets.ENDPOINT }}_" /home/runner/work/APIITReminder/APIITReminder/wireguard.conf
+         python wireguard.py
+         cat wireguard.conf
      - name: Check IP
        run: curl ifconfig.me
      - name: Install dependencies
