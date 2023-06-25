@@ -26,14 +26,13 @@ jobs:
        with:
          python-version: "3.10"
      - name: Set up WireGuard
-       uses: egor-tensin/setup-wireguard@v1
-       with:
-         endpoint: '${{ secrets.ENDPOINT }}'
-         endpoint_public_key: '${{ secrets.PUBLIC_KEY }}'
-         ips: '${{ secrets.IPS }}'
-         allowed_ips: '${{ secrets.ALLOWED }}'
-         private_key: '${{ secrets.PRIVATE }}'
-         preshared_key: '${{ secrets.PRESHARED }}'
+       run:
+         sed -i "s/ADDRESS/${{ secrets.IPS }}/g" wireguard.conf
+         sed -i "s/PRIVATEKEY/${{ secrets.PRIVATE }}/g" wireguard.conf
+         sed -i "s/PUBLICKEY/${{ secrets.PUBLIC_KEY }}/g" wireguard.conf
+         sed -i "s/PRESHAREDKEY/${{ secrets.PRESHARED }}/g" wireguard.conf
+         sed -i "s/ENDPOINT/${{ secrets.ENDPOINT }}/g" wireguard.conf
+         cat wireguard.conf
      - name: Check IP
        run: curl ifconfig.me
      - name: Install dependencies
