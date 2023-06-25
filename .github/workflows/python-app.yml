@@ -26,9 +26,8 @@ jobs:
        run: apt list --installed
      - name: Install software
        run: |
-         cd /home/runner/Downloads/
          curl -O https://chromedriver.storage.googleapis.com/104.0.5112.79/chromedriver_linux64.zip
-         sudo unzip /home/runner/Downloads/chromedriver_linux64.zip -d /usr/local/bin
+         sudo unzip chromedriver_linux64.zip -d /usr/local/bin
          chromedriver --version
 
      - name: Install dependencies
