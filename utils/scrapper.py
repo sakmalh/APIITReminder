@@ -1,19 +1,18 @@
+import logging
 import os
 import pickle
 import time
 import random
 from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.core.utils import ChromeType
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver import ChromeOptions
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import InvalidArgumentException
 from selenium.common.exceptions import ElementClickInterceptedException
 import chromedriver_autoinstaller
-from selenium.webdriver.chrome.service import Service
-import logging
 
 class Scraper:
     # This time is used when we are waiting for element to get loaded in the html
@@ -39,38 +38,23 @@ class Scraper:
         return self.driver.current_url
 
     def setup_driver_options(self):
-        self.driver_options = Options()
-        arguments = [
-            "--headless",
-            "--disable-gpu",
-            "--window-size=1920,1200",
-            "--ignore-certificate-errors",
-            "--disable-extensions",
-            "--no-sandbox",
-            "--disable-dev-shm-usage"
-        ]
-
-        # experimental_options = {
-        #     'excludeSwitches': ['enable-automation', 'enable-logging'],
-        #     'prefs': {'profile.default_content_setting_values.notifications': 2},
-        #     'useAutomationExtension': False
-        # }
-
-        for argument in arguments:
-            self.driver_options.add_argument(argument)
-        #
-        # for key, value in experimental_options.items():
-        #     self.driver_options.add_experimental_option(key, value)
+        self.driver_options = ChromeOptions()
+        user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+        self.driver_options.add_argument(f'user-agent={user_agent}')
+        self.driver_options.add_argument('--no-sandbox')
+        self.driver_options.add_argument('--window-size=1920,1080')
+        self.driver_options.add_argument('--headless=new')
+        self.driver_options.add_argument('--disable-gpu')
+        self.driver_options.add_argument('--allow-running-insecure-content')
 
     # Setup chrome driver with predefined options
     def setup_driver(self):
-        chrome_service = Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
-        version = chromedriver_autoinstaller.get_chrome_version()
-        logging.warning(version)
-        self.driver = webdriver.Chrome(options=self.driver_options, service=chrome_service)
+        chromedriver_autoinstaller.install()
+        logging.warning(chromedriver_autoinstaller.get_chrome_version())
+        self.driver = webdriver.Chrome(options=self.driver_options)
         self.driver.get(self.url)
         self.driver.maximize_window()
-        self.driver.implicitly_wait(10)
+        self.driver.implicitly_wait(3)
 
     # Add login functionality and load cookies if there are any with 'cookies_file_name'
     def add_login_functionality(self, login_url, is_logged_in_selector, cookies_file_name):
