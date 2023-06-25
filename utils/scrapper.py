@@ -3,17 +3,18 @@ import os
 import pickle
 import time
 import random
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.keys import Keys
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import InvalidArgumentException
 from selenium.common.exceptions import ElementClickInterceptedException
-import chromedriver_autoinstaller
+from random_user_agent.user_agent import UserAgent
+from random_user_agent.params import SoftwareName, OperatingSystem
+from selenium.webdriver.common.proxy import Proxy, ProxyType
+
 
 class Scraper:
     # This time is used when we are waiting for element to get loaded in the html
@@ -38,14 +39,31 @@ class Scraper:
         return self.driver.current_url
 
     def setup_driver_options(self):
+        software_names = [SoftwareName.CHROME.value]
+        operating_system = [OperatingSystem.WINDOWS.value,
+                            OperatingSystem.LINUX.value]
+
+        user_agent_rotator = UserAgent(software_names=software_names,
+                                       operating_system=operating_system,
+                                       limit=1000)
+        user_agent = user_agent_rotator.get_random_user_agent()
         self.driver_options = Options()
-        self.driver_options.add_argument(f'user-agent=Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/114.0')
-        # self.driver_options.add_argument('--no-sandbox')
-        # self.driver_options.add_argument('--headless')
+        self.driver_options.headless = True
+        self.driver_options.add_argument(f'user-agent={user_agent}')
+        self.driver_options.add_argument('--no-sandbox')
+        self.driver_options.add_argument('— disable-gpu')
+        self.driver_options.add_argument(' — window-size=1420,1080')
+        PROXY = 'http://20.24.43.214:80'
+        prox = Proxy()
+        prox.proxy_type = ProxyType.MANUAL
+        prox.autodetect = False
+        prox.capabilities = webdriver.DesiredCapabilities.CHROME
+        prox.http_proxy = PROXY
+        prox.ssl_proxy = PROXY
+        prox.to_capabilities()
 
     def setup_driver(self):
-
-        self.driver = webdriver.Firefox(options=self.driver_options)
+        self.driver = webdriver.Chrome(options=self.driver_options)
         self.driver.maximize_window()
         self.driver.get(self.url)
 
