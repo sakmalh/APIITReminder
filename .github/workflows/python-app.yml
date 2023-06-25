@@ -39,7 +39,12 @@ jobs:
          ENDPOINT: ${{ secrets.ENDPOINT }}
        run:
          python wireguard.py
-         cat wireguard.conf
+         sudo apt-get update && sudo apt-get upgrade -y
+         sudo apt-get install wireguard
+         sudo cp /path/to/wireguard.conf /etc/wireguard/wg0.conf
+         yes | cp -rf wireguard.conf /etc/wireguard/wg0.conf
+         sudo wg-quick up wg0
+
      - name: Check IP
        run: curl ifconfig.me
      - name: run main

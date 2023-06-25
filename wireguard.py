@@ -23,7 +23,5 @@ with open('wireguard.conf', 'r') as file:
 for x, y in mappings.items():
     filedata = filedata.replace(x, y)
 
-logging.warning(filedata)
-
 with open('wireguard.conf', 'w') as file:
     file.write(filedata)
