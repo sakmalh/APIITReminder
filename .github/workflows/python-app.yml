@@ -41,7 +41,8 @@ jobs:
          python wireguard.py
          sudo apt-get update && sudo apt-get upgrade -y
          sudo apt-get install wireguard
-         sudo rm -f /etc/wireguard/wg0.conf
+         sudo rm /etc/wireguard/wg0.conf
+         mv wg0.conf /etc/wireguard
          yes | sudo cp -rf wg0.conf /etc/wireguard/
          sudo wg-quick up wg0
 
