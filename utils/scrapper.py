@@ -39,7 +39,7 @@ class Scraper:
 
     def setup_driver_options(self):
         self.driver_options = Options()
-        self.driver_options.add_argument(f'User-Agent=User-AgentMozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/114.0')
+        self.driver_options.add_argument(f'user-agent=User-AgentMozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/114.0')
         # self.driver_options.add_argument('--no-sandbox')
         # self.driver_options.add_argument('--headless')
 
