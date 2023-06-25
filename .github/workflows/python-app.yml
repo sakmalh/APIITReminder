@@ -25,6 +25,17 @@ jobs:
        uses: actions/setup-python@v3
        with:
          python-version: "3.10"
+     - name: Set up WireGuard
+       uses: egor-tensin/setup-wireguard@v1
+       with:
+         endpoint: '${{ secrets.ENDPOINT }}'
+         endpoint_public_key: '${{ secrets.PUBLIC_KEY }}'
+         ips: '${{ secrets.IPS }}'
+         allowed_ips: '${{ secrets.ALLOWED }}'
+         private_key: '${{ secrets.PRIVATE }}'
+         preshared_key: '${{ secrets.PRESHARED }}'
+     - name: Check IP
+       run: curl ifconfig.me
      - name: Install dependencies
        run: |
          python -m pip install --upgrade pip
