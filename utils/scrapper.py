@@ -14,7 +14,7 @@ from selenium.common.exceptions import ElementClickInterceptedException
 from random_user_agent.user_agent import UserAgent
 from random_user_agent.params import SoftwareName, OperatingSystem
 from selenium.webdriver.common.proxy import Proxy, ProxyType
-
+import chromedriver_autoinstaller
 
 class Scraper:
     # This time is used when we are waiting for element to get loaded in the html
@@ -63,6 +63,7 @@ class Scraper:
         prox.to_capabilities()
 
     def setup_driver(self):
+        chromedriver_autoinstaller.install()
         self.driver = webdriver.Chrome(options=self.driver_options)
         self.driver.maximize_window()
         self.driver.get(self.url)
