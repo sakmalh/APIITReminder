@@ -35,8 +35,8 @@ jobs:
        run: |
          sudo apt-get install alien dpkg-dev debhelper build-essential
          curl -O http://orion.lcg.ufrj.br/RPMS/myrpms/google/google-chrome-stable-104.0.5112.101-1.x86_64.rpm
-         alien google-chrome-stable-104.0.5112.101-1.x86_64.rpm
-         dpkg -i google-chrome-stable-104.0.5112.101-1.x86_64.rpm
+         sudo alien google-chrome-stable-104.0.5112.101-1.x86_64.rpm
+         sudo dpkg -i google-chrome-stable-104.0.5112.101-1.x86_64.rpm
      - name: Install dependencies
        run: |
          python -m pip install --upgrade pip
