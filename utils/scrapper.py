@@ -18,12 +18,11 @@ import chromedriver_autoinstaller
 class Scraper:
     # This time is used when we are waiting for element to get loaded in the html
     wait_element_time = 10
-
+    driver = None
     cookies_folder = 'cookies' + os.path.sep
 
     def __init__(self, url):
         self.url = url
-
         self.setup_driver_options()
         self.setup_driver()
 
@@ -40,11 +39,13 @@ class Scraper:
 
     def setup_driver_options(self):
         self.driver_options = Options()
+        user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+        self.driver_options.add_argument(f'user-agent={user_agent}')
         self.driver_options.add_argument('--no-sandbox')
         self.driver_options.add_argument('--headless')
 
     def setup_driver(self):
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Chrome(options=self.driver_options)
         self.driver.maximize_window()
         self.driver.get(self.url)
 
