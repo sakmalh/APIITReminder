@@ -7,7 +7,6 @@ from utils.text_formatting import text_formatting
 from dotenv import load_dotenv
 import os
 import json
-from whatsapp_api_client_python import API
 
 import logging
 
