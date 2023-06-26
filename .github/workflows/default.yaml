@@ -14,10 +14,6 @@ jobs:
      runs-on: self-hosted
      steps:
      - uses: actions/checkout@v3
-     - name: Set up Python 3.10
-       uses: actions/setup-python@v4
-       with:
-         python-version: "3.9.6"
      - name: Installing package list
        run: apt list --installed
      - name: Removing previous chrome instances on runner
