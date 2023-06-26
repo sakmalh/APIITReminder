@@ -1,9 +1,11 @@
 name: Python application
 on:
+  workflow_dispatch:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+
 permissions:
   contents: read
   pull-requests: write
