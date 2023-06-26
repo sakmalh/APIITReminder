@@ -53,14 +53,6 @@ class Scraper:
         self.driver_options.add_argument('--no-sandbox')
         self.driver_options.add_argument('— disable-gpu')
         self.driver_options.add_argument(' — window-size=1420,1080')
-        PROXY = 'http://20.24.43.214:80'
-        prox = Proxy()
-        prox.proxy_type = ProxyType.MANUAL
-        prox.autodetect = False
-        prox.capabilities = webdriver.DesiredCapabilities.CHROME
-        prox.http_proxy = PROXY
-        prox.ssl_proxy = PROXY
-        prox.to_capabilities()
 
     def setup_driver(self):
         chromedriver_autoinstaller.install()
@@ -176,13 +168,15 @@ class Scraper:
 
         return element
 
-    def find_element_by_xpath(self, xpath, exit_on_missing_element=True, wait_element_time=None):
+    def find_element_by_xpath(self, xpath, exit_on_missing_element=True, wait_element_time=None, type_selector='xpath'):
         if wait_element_time is None:
             wait_element_time = self.wait_element_time
 
         # Intialize the condition to wait
-        wait_until = EC.element_to_be_clickable((By.XPATH, xpath))
-
+        if type_selector == 'xpath':
+            wait_until = EC.element_to_be_clickable((By.XPATH, xpath))
+        else:
+            wait_until = EC.element_to_be_clickable((By.NAME, xpath))
         try:
             # Wait for element to load
             element = WebDriverWait(self.driver, wait_element_time).until(wait_until)
@@ -195,6 +189,7 @@ class Scraper:
                 return False
 
         return element
+
 
     # Wait random time before cliking on the element
     def element_click(self, selector, delay=True):
@@ -221,11 +216,11 @@ class Scraper:
             self.driver.execute_script("arguments[0].click();", element)
 
     # Wait random time before sending the keys to the element
-    def element_send_keys(self, selector, text, delay=False):
+    def element_send_keys(self, selector, text, delay=True):
         if delay:
             self.wait_random_time()
 
-        element = self.find_element(selector)
+        element = self.find_element_by_xpath(selector, type_selector='NAME')
 
         try:
             element.click()
