@@ -17,6 +17,8 @@ jobs:
      runs-on: self-hosted
      steps:
      - uses: actions/checkout@v3
+       with:
+         ref: ${{ github.head_ref }}
      - name: Install dependencies
        run: |
          python3 -m pip install --upgrade pip
@@ -28,8 +30,5 @@ jobs:
          IDINSTANCE: ${{ secrets.IDINSTANCE }}
        run: |
          python3 main.py
-     - name: Push changes
-       run: |
-         git add .
-         git commit -m "Added Logs"
-         git push origin master
+     - name: github push
+     - uses: stefanzweifel/git-auto-commit-action@v4
