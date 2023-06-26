@@ -29,6 +29,8 @@ jobs:
          python3 main.py
 
      - name: Commit report
+       with:
+         repo-token: ${{ secrets.GITHUB_TOKEN }}
        run: |
            git config --global user.name 'Akmal Hameed'
            git config --global user.email 'sakmalh@users.noreply.github.com'
