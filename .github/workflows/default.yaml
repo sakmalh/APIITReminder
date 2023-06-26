@@ -21,6 +21,8 @@ jobs:
      - name: run main
        env:
          MICRO_PASS: ${{ secrets.MICRO_PASS }}
+         TOKENID: ${{ secrets.TOKENID }}
+         IDINSTANCE: ${{ secrets.IDINSTANCE }}
        run: |
          python3 main.py
      - name: Upload image as artifact

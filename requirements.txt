@@ -3,3 +3,4 @@ selenium==4.10.0
 webdriver_manager==3.8.5
 random_user_agent==1.0.1
 python-dotenv==1.0.0
+whatsapp_api_client_python==0.0.37

@@ -7,11 +7,17 @@ from utils.text_formatting import text_formatting
 from dotenv import load_dotenv
 import os
 import json
-
+from whatsapp_api_client_python import API
 import logging
 
 load_dotenv(override=False)
 PASSWORD = os.getenv('MICRO_PASS')
+IDINSTANCE = os.getenv('IDINSTANCE')
+TOKENID = os.getenv('TOKENID')
+
+greenAPI = API.GreenApi(
+    IDINSTANCE, TOKENID
+)
 
 email = 'cb012185@students.apiit.lk'
 
@@ -113,6 +119,7 @@ if len(ten_day_new) != 0 and len(three_day_new) != 0 and len(initialized_new) !=
         json.dump(data, outfile)
     text_message = text_formatting(ten_day_new, three_day_new, initialized_new)
     logging.warning(text_message)
-    # greenAPI.sending.sendMessage("120363120724407545@g.us", text_message)
+    greenAPI.sending.sendMessage("120363120724407545@g.us", text_message)
+    greenAPI.sending.sendMessage("94751285876@c.us", text_message)
 
-
+greenAPI.sending.sendMessage("94751285876@c.us", 'Run Successful')
