@@ -9,16 +9,19 @@ import os
 import json
 from whatsapp_api_client_python import API
 import logging
+import requests
+
 
 load_dotenv(override=False)
 PASSWORD = os.getenv('MICRO_PASS')
 IDINSTANCE = os.getenv('IDINSTANCE')
 TOKENID = os.getenv('TOKENID')
+PANTRYTOKEN = os.getenv('PANTRYTOKEN')
 
 greenAPI = API.GreenApi(
     IDINSTANCE, TOKENID
 )
-
+pantry = f"https://getpantry.cloud/apiv1/pantry/{PANTRYTOKEN}/basket/Test"
 email = 'cb012185@students.apiit.lk'
 
 course_pattern = r"^https:\/\/lms\.apiit\.lk\/course\/view"
@@ -83,8 +86,7 @@ for turnit in turnitin:
     if datetime.now() < datetime.strptime(turnitin_row[2].text, "%d %b %Y - %H:%M"):
         turnitin_details.append(details)
 
-with open("reminder_history.json", "r+") as read_file:
-    data = json.load(read_file)
+data = json.loads(requests.get(pantry).text)
 
 ten_day = data['10Day']
 three_day = data['3Day']
@@ -115,13 +117,11 @@ data['3Day'] = three_day
 data['New'] = initialized
 
 if len(ten_day_new) != 0 and len(three_day_new) != 0 and len(initialized_new) != 0:
-    with open("reminder_history.json", "w") as outfile:
-        json.dump(data, outfile)
+    response = requests.post(pantry, json=data)
     text_message = text_formatting(ten_day_new, three_day_new, initialized_new)
     logging.warning(text_message)
     greenAPI.sending.sendMessage("120363120724407545@g.us", text_message)
     greenAPI.sending.sendMessage("94751285876@c.us", text_message)
 
 greenAPI.sending.sendMessage("94751285876@c.us", 'Run Successful')
-with open("logs.txt", "a") as file_object:
-    file_object.write(f"{str(datetime.now())}\n")
+
