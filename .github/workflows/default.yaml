@@ -21,13 +21,13 @@ jobs:
        run: |
          python3 -m pip install --upgrade pip
          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-#     - name: run main
-#       env:
-#         MICRO_PASS: ${{ secrets.MICRO_PASS }}
-#         TOKENID: ${{ secrets.TOKENID }}
-#         IDINSTANCE: ${{ secrets.IDINSTANCE }}
-#       run: |
-#         python3 main.py
+     - name: run main
+       env:
+         MICRO_PASS: ${{ secrets.MICRO_PASS }}
+         TOKENID: ${{ secrets.TOKENID }}
+         IDINSTANCE: ${{ secrets.IDINSTANCE }}
+       run: |
+         python3 main.py
      - name: Push changes
        run: |
          git add .
