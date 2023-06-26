@@ -123,3 +123,5 @@ if len(ten_day_new) != 0 and len(three_day_new) != 0 and len(initialized_new) !=
     greenAPI.sending.sendMessage("94751285876@c.us", text_message)
 
 greenAPI.sending.sendMessage("94751285876@c.us", 'Run Successful')
+with open("logs.txt", "a") as file_object:
+    file_object.write(f"{str(datetime.now())}\n")
