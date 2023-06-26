@@ -8,9 +8,13 @@ on:
   schedule:
     - cron: "0 2 * * *"
 
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
 permissions:
   contents: read
   pull-requests: write
+
 jobs:
    build:
      runs-on: self-hosted
@@ -29,8 +33,6 @@ jobs:
          python3 main.py
 
      - name: Commit report
-       with:
-         repo-token: ${{ secrets.GITHUB_TOKEN }}
        run: |
            git config --global user.name 'Akmal Hameed'
            git config --global user.email 'sakmalh@users.noreply.github.com'
