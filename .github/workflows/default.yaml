@@ -28,7 +28,6 @@ jobs:
          IDINSTANCE: ${{ secrets.IDINSTANCE }}
        run: |
          python3 main.py
-
      - name: Push changes
        run: |
          git commit -am "Added Logs"
