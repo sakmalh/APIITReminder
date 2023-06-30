@@ -116,12 +116,13 @@ data['10Day'] = ten_day
 data['3Day'] = three_day
 data['New'] = initialized
 
-if len(ten_day_new) != 0 and len(three_day_new) != 0 and len(initialized_new) != 0:
+if len(ten_day_new) != 0 or len(three_day_new) != 0 or len(initialized_new) != 0:
     response = requests.post(pantry, json=data)
     text_message = text_formatting(ten_day_new, three_day_new, initialized_new)
     logging.warning(text_message)
     greenAPI.sending.sendMessage("120363120724407545@g.us", text_message)
     greenAPI.sending.sendMessage("94751285876@c.us", text_message)
+    # greenAPI.sending.sendMessage("120363074446222578@g.us", text_message)
 
 greenAPI.sending.sendMessage("94751285876@c.us", 'Run Successful')
 
