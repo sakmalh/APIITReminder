@@ -63,7 +63,7 @@ for assignment in assignments:
         'Link': assignment,
         'Type': 'Normal',
         'Due Date': due_date,
-        'Time Remaining': str(datetime.now() - datetime.strptime(due_date, '%A, %d %B %Y, %I:%M %p')),
+        'Time Remaining': datetime.now() - datetime.strptime(due_date, '%A, %d %B %Y, %I:%M %p'),
         'Title': title
     }
 
@@ -80,7 +80,7 @@ for turnit in turnitin:
         'Link': turnit,
         'Type': 'Turnitin',
         'Due Date': turnitin_row[2].text,
-        'Time Remaining': str(datetime.now() - datetime.strptime(turnitin_row[2].text, "%d %b %Y - %H:%M")),
+        'Time Remaining': datetime.now() - datetime.strptime(turnitin_row[2].text, "%d %b %Y - %H:%M"),
         'Title': turnitin_row[0].text
     }
     if datetime.now() < datetime.strptime(turnitin_row[2].text, "%d %b %Y - %H:%M"):
