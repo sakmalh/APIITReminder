@@ -99,18 +99,18 @@ three_day_new = []
 initialized_new = []
 
 for total_assignment in total_assignments:
-    if total_assignment['Time Remaining'].days < 10 and total_assignment['Link'] not in ten_day:
-        ten_day_new.append(total_assignment["Link"])
+    if total_assignment['Time Remaining'].days < 10 and total_assignment['Time Remaining'].days > 3 and total_assignment['Link'] not in ten_day:
+        ten_day_new.append(total_assignment)
 
     if total_assignment['Time Remaining'].days < 3 and total_assignment['Link'] not in three_day:
-        three_day_new.append(total_assignment['Link'])
+        three_day_new.append(total_assignment)
 
     if total_assignment['Link'] not in initialized_new:
-        initialized_new.append(total_assignment['Link'])
+        initialized_new.append(total_assignment)
 
-ten_day.extend(ten_day_new)
-three_day.extend(three_day_new)
-initialized.extend(initialized_new)
+ten_day.extend([x['Link'] for x in ten_day_new])
+three_day.extend([x['Link'] for x in three_day_new])
+initialized.extend([x['Link'] for x in initialized_new])
 
 data['10Day'] = ten_day
 data['3Day'] = three_day
