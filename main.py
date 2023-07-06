@@ -63,7 +63,7 @@ for assignment in assignments:
         'Link': assignment,
         'Type': 'Normal',
         'Due Date': due_date,
-        'Time Remaining': datetime.now() - datetime.strptime(due_date, '%A, %d %B %Y, %I:%M %p'),
+        'Time Remaining': str(datetime.now() - datetime.strptime(due_date, '%A, %d %B %Y, %I:%M %p')),
         'Title': title
     }
 
@@ -80,7 +80,7 @@ for turnit in turnitin:
         'Link': turnit,
         'Type': 'Turnitin',
         'Due Date': turnitin_row[2].text,
-        'Time Remaining': datetime.now() - datetime.strptime(turnitin_row[2].text, "%d %b %Y - %H:%M"),
+        'Time Remaining': str(datetime.now() - datetime.strptime(turnitin_row[2].text, "%d %b %Y - %H:%M")),
         'Title': turnitin_row[0].text
     }
     if datetime.now() < datetime.strptime(turnitin_row[2].text, "%d %b %Y - %H:%M"):
@@ -100,13 +100,13 @@ initialized_new = []
 
 for total_assignment in total_assignments:
     if total_assignment['Time Remaining'].days < 10 and total_assignment['Link'] not in ten_day:
-        ten_day_new.append(total_assignment)
+        ten_day_new.append(total_assignment["Link"])
 
     if total_assignment['Time Remaining'].days < 3 and total_assignment['Link'] not in three_day:
-        three_day_new.append(total_assignment)
+        three_day_new.append(total_assignment['Link'])
 
     if total_assignment['Link'] not in initialized_new:
-        initialized_new.append(total_assignment)
+        initialized_new.append(total_assignment['Link'])
 
 ten_day.extend(ten_day_new)
 three_day.extend(three_day_new)
