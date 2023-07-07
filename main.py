@@ -97,13 +97,17 @@ total_assignments = turnitin_details + assignments_details
 ten_day_new = []
 three_day_new = []
 initialized_new = []
+one_day = []
 
 for total_assignment in total_assignments:
     if total_assignment['Time Remaining'].days < 10 and total_assignment['Time Remaining'].days > 3 and total_assignment['Link'] not in ten_day:
         ten_day_new.append(total_assignment)
 
-    if total_assignment['Time Remaining'].days < 3 and total_assignment['Link'] not in three_day:
+    if total_assignment['Time Remaining'].days < 4 and total_assignment['Time Remaining'].days > 0 and total_assignment['Link'] not in three_day:
         three_day_new.append(total_assignment)
+
+    if total_assignment['Time Remaining'].days == 0:
+        one_day.append(total_assignment)
 
     if total_assignment['Link'] not in initialized:
         initialized_new.append(total_assignment)
@@ -118,8 +122,8 @@ data['New'] = initialized
 
 if len(ten_day_new) != 0 or len(three_day_new) != 0 or len(initialized_new) != 0:
     response = requests.post(pantry, json=data)
-    text_message = text_formatting(ten_day_new, three_day_new, initialized_new)
-    logging.warning(text_message)
+    text_message = text_formatting(ten_day_new, three_day_new, initialized_new, one_day)
+    logging.info(text_message)
     greenAPI.sending.sendMessage("120363120724407545@g.us", text_message)
     greenAPI.sending.sendMessage("94751285876@c.us", text_message)
     # greenAPI.sending.sendMessage("120363074446222578@g.us", text_message)
