@@ -126,7 +126,7 @@ if len(ten_day_new) != 0 or len(three_day_new) != 0 or len(initialized_new) != 0
     logging.info(text_message)
     greenAPI.sending.sendMessage("120363120724407545@g.us", text_message)
     greenAPI.sending.sendMessage("94751285876@c.us", text_message)
-    # greenAPI.sending.sendMessage("120363074446222578@g.us", text_message)
+    greenAPI.sending.sendMessage("120363074446222578@g.us", text_message)
 
 greenAPI.sending.sendMessage("94751285876@c.us", 'Run Successful')
 
