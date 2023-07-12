@@ -100,10 +100,10 @@ initialized_new = []
 one_day = []
 
 for total_assignment in total_assignments:
-    if total_assignment['Time Remaining'].days < 10 and total_assignment['Time Remaining'].days > 3 and total_assignment['Link'] not in ten_day:
+    if total_assignment['Time Remaining'].days == 10:
         ten_day_new.append(total_assignment)
 
-    if total_assignment['Time Remaining'].days < 4 and total_assignment['Time Remaining'].days > 0 and total_assignment['Link'] not in three_day:
+    if total_assignment['Time Remaining'].days == 3:
         three_day_new.append(total_assignment)
 
     if total_assignment['Time Remaining'].days == 0:
