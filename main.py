@@ -120,7 +120,7 @@ data['10Day'] = ten_day
 data['3Day'] = three_day
 data['New'] = initialized
 
-if len(ten_day_new) != 0 or len(three_day_new) != 0 or len(initialized_new) != 0:
+if len(ten_day_new) != 0 or len(three_day_new) != 0 or len(initialized_new) != 0 or len(one_day) != 0:
     response = requests.post(pantry, json=data)
     text_message = text_formatting(ten_day_new, three_day_new, initialized_new, one_day)
     logging.info(text_message)
