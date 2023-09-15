@@ -3,6 +3,7 @@ import time
 import re
 from selenium.webdriver.common.by import By
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from utils.text_formatting import text_formatting
 from dotenv import load_dotenv
 import os
@@ -21,7 +22,7 @@ PANTRYTOKEN = os.getenv('PANTRYTOKEN')
 greenAPI = API.GreenApi(
     IDINSTANCE, TOKENID
 )
-pantry = f"https://getpantry.cloud/apiv1/pantry/{PANTRYTOKEN}/basket/Test"
+pantry = f"https://api.npoint.io/a2376d48fe134d4592dc"
 email = 'cb012185@students.apiit.lk'
 
 course_pattern = r"^https:\/\/lms\.apiit\.lk\/course\/view"
@@ -63,11 +64,11 @@ for assignment in assignments:
         'Link': assignment,
         'Type': 'Normal',
         'Due Date': due_date,
-        'Time Remaining': datetime.strptime(due_date, '%A, %d %B %Y, %I:%M %p') - datetime.now(),
+        'Time Remaining': datetime.strptime(due_date, '%A, %d %B %Y, %I:%M %p').replace(tzinfo=ZoneInfo('Asia/Kolkata')) - datetime.now(tz=ZoneInfo('Asia/Kolkata')),
         'Title': title
     }
 
-    if datetime.now() < datetime.strptime(due_date, '%A, %d %B %Y, %I:%M %p'):
+    if datetime.now(tz=ZoneInfo('Asia/Kolkata')) < datetime.strptime(due_date, '%A, %d %B %Y, %I:%M %p').replace(tzinfo=ZoneInfo('Asia/Kolkata')) :
         assignments_details.append(details)
 
 turnitin_details = []
@@ -80,10 +81,10 @@ for turnit in turnitin:
         'Link': turnit,
         'Type': 'Turnitin',
         'Due Date': turnitin_row[2].text,
-        'Time Remaining': datetime.strptime(turnitin_row[2].text, "%d %b %Y - %H:%M") - datetime.now(),
+        'Time Remaining': datetime.strptime(turnitin_row[2].text, "%d %b %Y - %H:%M").replace(tzinfo=ZoneInfo('Asia/Kolkata')) - datetime.now(tz=ZoneInfo('Asia/Kolkata')),
         'Title': turnitin_row[0].text
     }
-    if datetime.now() < datetime.strptime(turnitin_row[2].text, "%d %b %Y - %H:%M"):
+    if datetime.now(tz=ZoneInfo('Asia/Kolkata')) < datetime.strptime(turnitin_row[2].text, "%d %b %Y - %H:%M").replace(tzinfo=ZoneInfo('Asia/Kolkata')) :
         turnitin_details.append(details)
 
 data = json.loads(requests.get(pantry).text)
